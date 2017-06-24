@@ -59,20 +59,20 @@ class ChunkedReadJob implements ShouldQueue
      */
     public function __construct(
         $file,
-        $sheets = null,
+        $sheets,
         $startRow,
         $startIndex,
         $chunkSize,
         callable $callback,
         $shouldQueue = true
     ) {
-        $this->startRow   = $startRow;
-        $this->chunkSize  = $chunkSize;
+        $this->startRow = $startRow;
+        $this->chunkSize = $chunkSize;
         $this->startIndex = $startIndex;
-        $this->file       = $file;
+        $this->file = $file;
 
-        $this->callback    = $shouldQueue ? (new Serializer)->serialize($callback) : $callback;
-        $this->sheets      = $sheets;
+        $this->callback = $shouldQueue ? (new Serializer())->serialize($callback) : $callback;
+        $this->sheets = $sheets;
         $this->shouldQueue = $shouldQueue;
     }
 
@@ -99,7 +99,7 @@ class ChunkedReadJob implements ShouldQueue
         // Slice the results
         $results = $reader->get()->slice($this->startIndex, $this->chunkSize);
 
-        $callback = $this->shouldQueue ? (new Serializer)->unserialize($this->callback) : $this->callback;
+        $callback = $this->shouldQueue ? (new Serializer())->unserialize($this->callback) : $this->callback;
 
         // Do a callback
         if (is_callable($callback)) {

@@ -1,34 +1,39 @@
-<?php namespace Maatwebsite\Excel\Writers;
+<?php
+
+namespace Maatwebsite\Excel\Writers;
 
 use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
 
 /**
- *
- * LaravelExcel Excel writer
+ * LaravelExcel Excel writer.
  *
  * @category   Laravel Excel
+ *
  * @version    1.0.0
- * @package    maatwebsite/excel
+ *
  * @copyright  Copyright (c) 2013 - 2014 Maatwebsite (http://www.maatwebsite.nl)
  * @author     Maatwebsite <info@maatwebsite.nl>
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  */
-class CellWriter {
-
+class CellWriter
+{
     /**
-     * Current $sheet
+     * Current $sheet.
+     *
      * @var LaravelExcelWorksheet
      */
     public $sheet;
 
     /**
-     * Selected cells
+     * Selected cells.
+     *
      * @var array
      */
     public $cells;
 
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param array                 $cells
      * @param LaravelExcelWorksheet $sheet
      */
@@ -39,15 +44,16 @@ class CellWriter {
     }
 
     /**
-     * Set cell value
+     * Set cell value.
+     *
      * @param [type] $value
-     * @return  CellWriter
+     *
+     * @return CellWriter
      */
     public function setValue($value)
     {
         // Only set cell value for single cells
-        if (!str_contains($this->cells, ':'))
-        {
+        if (!str_contains($this->cells, ':')) {
             $this->sheet->setCellValue($this->cells, $value);
         }
 
@@ -55,11 +61,13 @@ class CellWriter {
     }
 
     /**
-     * Set the background
+     * Set the background.
+     *
      * @param string $color
      * @param string $type
      * @param string $colorType
-     * @return  CellWriter
+     *
+     * @return CellWriter
      */
     public function setBackground($color, $type = 'solid', $colorType = 'rgb')
     {
@@ -67,10 +75,12 @@ class CellWriter {
     }
 
     /**
-     * Set the font color
+     * Set the font color.
+     *
      * @param string $color
      * @param string $colorType
-     * @return  CellWriter
+     *
+     * @return CellWriter
      */
     public function setFontColor($color, $colorType = 'rgb')
     {
@@ -78,9 +88,11 @@ class CellWriter {
     }
 
     /**
-     * Set the font
+     * Set the font.
+     *
      * @param $styles
-     * @return  CellWriter
+     *
+     * @return CellWriter
      */
     public function setFont($styles)
     {
@@ -88,55 +100,63 @@ class CellWriter {
     }
 
     /**
-     * Set font family
+     * Set font family.
+     *
      * @param string $family
-     * @return  CellWriter
+     *
+     * @return CellWriter
      */
     public function setFontFamily($family)
     {
         return $this->setStyle('font', [
-            'name' => $family
+            'name' => $family,
         ]);
     }
 
     /**
-     * Set font size
-     * @param  string $size
-     * @return  CellWriter
+     * Set font size.
+     *
+     * @param string $size
+     *
+     * @return CellWriter
      */
     public function setFontSize($size)
     {
         return $this->setStyle('font', [
-            'size' => $size
+            'size' => $size,
         ]);
     }
 
     /**
-     * Set font weight
-     * @param  boolean|string $bold
-     * @return  CellWriter
+     * Set font weight.
+     *
+     * @param bool|string $bold
+     *
+     * @return CellWriter
      */
     public function setFontWeight($bold = true)
     {
         return $this->setStyle('font', [
-            'bold' => ($bold === 'bold' || $bold === true)
+            'bold' => ($bold === 'bold' || $bold === true),
         ]);
     }
 
     /**
-     * Set border
+     * Set border.
+     *
      * @param string      $top
      * @param bool|string $right
      * @param bool|string $bottom
      * @param bool|string $left
-     * @return  CellWriter
+     *
+     * @return CellWriter
      */
     public function setBorder($top = 'none', $right = 'none', $bottom = 'none', $left = 'none')
     {
         // Set the border styles
         $styles = is_array($top) ? $top : [
             'top'    => [
-                'style' => $top
+                'style' => $top,
             ],
             'left'   => [
                 'style' => $left,
@@ -146,82 +166,96 @@ class CellWriter {
             ],
             'bottom' => [
                 'style' => $bottom,
-            ]
+            ],
         ];
 
         return $this->setStyle('borders', $styles);
     }
 
     /**
-     * Set the text rotation
-     * @param integer $alignment
-     * @return  CellWriter
+     * Set the text rotation.
+     *
+     * @param int $alignment
+     *
+     * @return CellWriter
      */
     public function setTextRotation($degrees)
     {
-      $style = $this->getCellStyle()->getAlignment()->setTextRotation($degrees);
-      return $this;
+        $style = $this->getCellStyle()->getAlignment()->setTextRotation($degrees);
+
+        return $this;
     }
 
     /**
-     * Set the alignment
+     * Set the alignment.
+     *
      * @param string $alignment
-     * @return  CellWriter
+     *
+     * @return CellWriter
      */
     public function setAlignment($alignment)
     {
         return $this->setStyle('alignment', [
-            'horizontal' => $alignment
+            'horizontal' => $alignment,
         ]);
     }
 
     /**
-     * Set vertical alignment
+     * Set vertical alignment.
+     *
      * @param string $alignment
-     * @return  CellWriter
+     *
+     * @return CellWriter
      */
     public function setValignment($alignment)
     {
         return $this->setStyle('alignment', [
-            'vertical' => $alignment
+            'vertical' => $alignment,
         ]);
     }
 
     /**
-     * Set the text indent
-     * @param integer $indent
-     * @return  CellWriter
+     * Set the text indent.
+     *
+     * @param int $indent
+     *
+     * @return CellWriter
      */
     public function setTextIndent($indent)
     {
-      $style = $this->getCellStyle()->getAlignment()->setIndent((int)$indent);
-      return $this;
+        $style = $this->getCellStyle()->getAlignment()->setIndent((int) $indent);
+
+        return $this;
     }
 
     /**
-     * Set the color style
-     * @param         $styleType
-     * @param string  $color
-     * @param boolean $type
-     * @param string  $colorType
-     * @return  CellWriter
+     * Set the color style.
+     *
+     * @param        $styleType
+     * @param string $color
+     * @param bool   $type
+     * @param string $colorType
+     *
+     * @return CellWriter
      */
     protected function setColorStyle($styleType, $color, $type = false, $colorType = 'rgb')
     {
         // Set the styles
         $styles = is_array($color) ? $color : [
             'type'  => $type,
-            'color' => [$colorType => str_replace('#', '', $color)]
+            'color' => [$colorType => str_replace('#', '', $color)],
         ];
 
         return $this->setStyle($styleType, $styles);
     }
 
     /**
-     * Set style
+     * Set style.
+     *
      * @param        $styleType
      * @param string $styles
-     * @return  CellWriter
+     *
+     * @return CellWriter
      */
     protected function setStyle($styleType, $styles)
     {
@@ -230,14 +264,15 @@ class CellWriter {
 
         // Apply style from array
         $style->applyFromArray([
-            $styleType => $styles
+            $styleType => $styles,
         ]);
 
         return $this;
     }
 
     /**
-     * Get the cell style
+     * Get the cell style.
+     *
      * @return \PHPExcel_Style
      */
     protected function getCellStyle()
