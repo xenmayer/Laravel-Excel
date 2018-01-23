@@ -1,6 +1,7 @@
 <?php namespace Maatwebsite\Excel\Classes;
 
 use Closure;
+use Maatwebsite\Excel\Traits\LaravelExcelWorksheetTemplaterTrait;
 use PHPExcel_Cell;
 use PHPExcel_Exception;
 use PHPExcel_Worksheet;
@@ -22,6 +23,7 @@ use PHPExcel_Worksheet_PageSetup;
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt    LGPL
  */
 class LaravelExcelWorksheet extends PHPExcel_Worksheet {
+    use LaravelExcelWorksheetTemplaterTrait;
 
     /**
      * Parent
